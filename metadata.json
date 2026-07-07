@@ -1,0 +1,6 @@
+{
+  "name": "The Farmer's Beacon",
+  "description": "An interactive digital hub for farmers to buy agricultural inputs, request expert consultations on crops & animals, find agricultural training, subscribe to updates, and read questions and answers.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

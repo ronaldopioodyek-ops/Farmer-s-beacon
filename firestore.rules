@@ -1,0 +1,57 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper: checks if user is the designated agricultural expert admin
+    function isAdmin() {
+      return request.auth != null && request.auth.token.email == "ronaldopioodyek@gmail.com";
+    }
+
+    // Agro Inputs Collection
+    match /agro_inputs/{inputId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Trainings Collection
+    match /trainings/{trainingId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Questions and Answers Collection
+    match /questions/{questionId} {
+      allow read: if true;
+      // Allow any farmer to ask a question (create) or upvote (update upvotes only)
+      allow create: if true;
+      allow update: if isAdmin() || (
+        // Allow upvoting: only upvotes field changes, and it increases by exactly 1
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['upvotes']) &&
+        request.resource.data.upvotes == resource.data.upvotes + 1
+      );
+      allow delete: if isAdmin();
+    }
+
+    // Subscriptions Collection
+    match /subscriptions/{subscriptionId} {
+      allow read: if isAdmin();
+      allow create: if true;
+      allow update, delete: if isAdmin();
+    }
+
+    // Consultations Collection
+    match /consultations/{consultationId} {
+      // Allow reading single consultation by its ID so farmer can check response
+      allow get: if true;
+      allow list: if isAdmin();
+      allow create: if true;
+      allow update, delete: if isAdmin();
+    }
+
+    // Training Registrations Collection
+    match /training_registrations/{regId} {
+      allow read, write: if isAdmin();
+      allow create: if true;
+    }
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "entities": {
+    "AgroInput": {
+      "title": "AgroInput",
+      "description": "An item or input for sale, like seeds, fertilizer, or tools",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "price": { "type": "number" },
+        "unit": { "type": "string" },
+        "category": { "type": "string", "enum": ["Seeds", "Fertilizers", "Pesticides", "Tools", "Other"] },
+        "imageUrl": { "type": "string" },
+        "stock": { "type": "number" },
+        "contactPhone": { "type": "string" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["id", "title", "description", "price", "unit", "category", "stock", "contactPhone", "createdAt"]
+    },
+    "Training": {
+      "title": "Training",
+      "description": "An advertised training session, workshop, or skill offering by the expert",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "date": { "type": "string" },
+        "location": { "type": "string" },
+        "skillsCovered": { "type": "array" },
+        "instructorBio": { "type": "string" },
+        "duration": { "type": "string" },
+        "imageUrl": { "type": "string" },
+        "createdAt": { "type": "number" }
+      },
+      "required": ["id", "title", "description", "date", "location", "skillsCovered", "instructorBio", "duration", "imageUrl", "createdAt"]
+    },
+    "Question": {
+      "title": "Question",
+      "description": "A farmer client Q&A session. Publicly shared questions and answers",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "questionText": { "type": "string" },
+        "askerName": { "type": "string" },
+        "askerEmail": { "type": "string" },
+        "answerText": { "type": "string" },
+        "answeredBy": { "type": "string" },
+        "dateAsked": { "type": "number" },
+        "dateAnswered": { "type": "number" },
+        "isAnswered": { "type": "boolean" },
+        "category": { "type": "string", "enum": ["Crops", "Animals", "General"] },
+        "upvotes": { "type": "number" }
+      },
+      "required": ["id", "questionText", "askerName", "dateAsked", "isAnswered", "category", "upvotes"]
+    },
+    "Subscription": {
+      "title": "Subscription",
+      "description": "A farmer client newsletter or update subscription",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string" },
+        "subscribedAt": { "type": "number" },
+        "isActive": { "type": "boolean" }
+      },
+      "required": ["id", "email", "subscribedAt", "isActive"]
+    },
+    "Consultation": {
+      "title": "Consultation",
+      "description": "A private consultation request on agriculture, animals, or crops",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "category": { "type": "string", "enum": ["Crops", "Animals", "Farm Management", "Other"] },
+        "query": { "type": "string" },
+        "status": { "type": "string", "enum": ["Pending", "In-Progress", "Resolved"] },
+        "responseText": { "type": "string" },
+        "createdAt": { "type": "number" },
+        "repliedAt": { "type": "number" }
+      },
+      "required": ["id", "name", "email", "category", "query", "status", "createdAt"]
+    },
+    "TrainingRegistration": {
+      "title": "TrainingRegistration",
+      "description": "A booking or registration interest in an agricultural training program",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "trainingId": { "type": "string" },
+        "trainingTitle": { "type": "string" },
+        "name": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" },
+        "registeredAt": { "type": "number" }
+      },
+      "required": ["id", "trainingId", "trainingTitle", "name", "email", "phone", "registeredAt"]
+    }
+  },
+  "firestore": {
+    "agro_inputs/{inputId}": {
+      "schema": "AgroInput",
+      "description": "Collection of agro-input items listed for sale"
+    },
+    "trainings/{trainingId}": {
+      "schema": "Training",
+      "description": "Collection of agricultural training opportunities"
+    },
+    "questions/{questionId}": {
+      "schema": "Question",
+      "description": "Collection of farmer questions and answers"
+    },
+    "subscriptions/{subscriptionId}": {
+      "schema": "Subscription",
+      "description": "Collection of farmer email newsletter subscriptions"
+    },
+    "consultations/{consultationId}": {
+      "schema": "Consultation",
+      "description": "Collection of private agricultural consultations"
+    },
+    "training_registrations/{regId}": {
+      "schema": "TrainingRegistration",
+      "description": "Collection of training bookings"
+    }
+  }
+}
